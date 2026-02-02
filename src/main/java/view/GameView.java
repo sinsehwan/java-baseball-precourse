@@ -9,10 +9,12 @@ public class GameView {
 
     public void printTurnMsg() throws IOException {
         bw.write(turnMsg);
+        bw.flush();
     }
 
     public void printGameEndMsg() throws IOException {
         bw.write(gameEndMsg);
+        bw.flush();
     }
 
     public void releaseResource() throws IOException {

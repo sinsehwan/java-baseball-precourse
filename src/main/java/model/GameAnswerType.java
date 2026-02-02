@@ -9,6 +9,11 @@ public class GameAnswerType {
         this.ballCount = 0;
     }
 
+    public GameAnswerType(int strikeCount, int ballCount){
+        this.strikeCount = strikeCount;
+        this.ballCount = ballCount;
+    }
+
     public String getAnswer() {
         if (strikeCount + ballCount == 0) {
             return "낫싱";
