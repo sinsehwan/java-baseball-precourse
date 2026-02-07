@@ -42,7 +42,7 @@ public class GameController {
         } while(resultCode == 1);
 
         if (resultCode != 2) {
-            System.out.println("[ERROR]: Abnormal Exit");
+            gameView.printErrorMsg("[ERROR]: Abnormal Exit");
             return;
         }
 
@@ -93,8 +93,7 @@ public class GameController {
             }
         }
         catch (Exception e) {
-            System.out.println("[ERROR]: Invalid Input Number");
-            return -1;
+            gameView.printErrorMsg("[ERROR]: Invalid Input Number");
         }
         return -1;
     }

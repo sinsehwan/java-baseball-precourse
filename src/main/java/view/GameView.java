@@ -32,6 +32,17 @@ public class GameView {
         bw.flush();
     }
 
+    public void printErrorMsg(String message) {
+        try {
+            bw.write(message);
+            bw.newLine();
+            bw.flush();
+        }
+        catch (IOException e) {
+            System.out.println(message);
+        }
+    }
+
     public void releaseResource() throws IOException {
         bw.close();
     }
