@@ -3,6 +3,7 @@ package controller;
 import model.BaseballGameNumber;
 import model.GameAnswerType;
 import util.RandomNumberGenerator;
+import view.ErrorMessage;
 import view.GameView;
 
 import java.io.BufferedReader;
@@ -30,7 +31,7 @@ public class GameController {
             new GameController().run();
         }
         catch (IOException e) {
-            System.out.println("[ERROR]: System IO Error");
+            System.out.println(ErrorMessage.SYSTEM_IO_ERROR.getMsg());
         }
     }
 
@@ -42,7 +43,7 @@ public class GameController {
         } while(resultCode == 1);
 
         if (resultCode != 2) {
-            gameView.printErrorMsg("[ERROR]: Abnormal Exit");
+            gameView.printErrorMsg(ErrorMessage.ABNORMAL_EXIT.getMsg());
             return;
         }
 
@@ -93,7 +94,7 @@ public class GameController {
             }
         }
         catch (Exception e) {
-            gameView.printErrorMsg("[ERROR]: Invalid Input Number");
+            gameView.printErrorMsg(ErrorMessage.INVALID_INPUT_NUMBER.getMsg());
         }
         return -1;
     }
