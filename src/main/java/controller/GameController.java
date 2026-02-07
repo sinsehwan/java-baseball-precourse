@@ -99,8 +99,18 @@ public class GameController {
             return userInput;
         }
 
+        if (rawInput.contains("0")) {
+            gameView.printErrorMsg(ErrorMessage.CONTAINS_ZERO.getMsg());
+            return userInput;
+        }
+
         try {
             userInput = Integer.parseInt(rawInput);
+
+            if (userInput <= 0) {
+                gameView.printErrorMsg(ErrorMessage.NOT_POSITIVE.getMsg());
+                return -1;
+            }
         }
         catch (Exception e) {
             gameView.printErrorMsg(ErrorMessage.INVALID_INPUT_NUMBER.getMsg());
