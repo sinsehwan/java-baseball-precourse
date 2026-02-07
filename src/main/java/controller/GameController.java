@@ -46,7 +46,7 @@ public class GameController {
             return;
         }
 
-        System.out.println("게임을 완전히 종료합니다.");
+        gameView.printGameEndMsg();
 
         br.close();
     }
@@ -61,11 +61,10 @@ public class GameController {
             BaseballGameNumber answerNumber = new BaseballGameNumber(toIntArray(answer));
             BaseballGameNumber userNumber = new BaseballGameNumber(toIntArray(userInput));
 
-            GameAnswerType answerType = userNumber.compare(answerNumber);
-            System.out.println(answerType.getAnswer());
+            gameView.printResult(userNumber.compare(answerNumber));
         }
 
-        gameView.printGameEndMsg();
+        gameView.printSingleGameEndMsg();
         // 예외 처리 필요
         return Integer.parseInt(br.readLine());
     }
