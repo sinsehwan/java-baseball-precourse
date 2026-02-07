@@ -10,6 +10,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Objects;
 
 public class GameController {
     private static final int NUMBER_LENGTH = 3;
@@ -36,13 +38,13 @@ public class GameController {
     }
 
     public void run() throws IOException {
-        int resultCode;
+        String gameEndUserResponse;
 
         do {
-            resultCode = playSingleGame();
-        } while(resultCode == 1);
+            gameEndUserResponse = playSingleGame();
+        } while(Objects.equals(gameEndUserResponse, RESTART_COMMAND));
 
-        if (resultCode != 2) {
+        if (!Objects.equals(gameEndUserResponse, EXIT_COMMAND)) {
             gameView.printErrorMsg(ErrorMessage.ABNORMAL_EXIT.getMsg());
             return;
         }
@@ -50,24 +52,31 @@ public class GameController {
         gameView.printGameEndMsg();
 
         br.close();
+        gameView.releaseResource();
     }
 
-    public int playSingleGame() throws IOException {
+    public String playSingleGame() throws IOException {
         int answer = randomNumberGenerator.makeRand3digit();
+        BaseballGameNumber answerNumber = new BaseballGameNumber(toIntArray(answer));
 
         int userInput = -1;
         while (answer != userInput) {
-            gameView.printTurnMsg();
-            userInput = getUserInput();
-            BaseballGameNumber answerNumber = new BaseballGameNumber(toIntArray(answer));
-            BaseballGameNumber userNumber = new BaseballGameNumber(toIntArray(userInput));
-
-            gameView.printResult(userNumber.compare(answerNumber));
+            userInput = playTurn(answerNumber);
         }
 
         gameView.printSingleGameEndMsg();
-        // 예외 처리 필요
-        return Integer.parseInt(br.readLine());
+        return br.readLine();
+    }
+
+    private int playTurn(BaseballGameNumber answerNumber) throws IOException {
+        int userInput;
+        gameView.printTurnMsg();
+        userInput = getUserInput();
+
+        BaseballGameNumber userNumber = new BaseballGameNumber(toIntArray(userInput));
+
+        gameView.printResult(userNumber.compare(answerNumber));
+        return userInput;
     }
 
     private int getUserInput() throws IOException {
@@ -84,24 +93,29 @@ public class GameController {
     }
 
     private int parseUserInput(String rawInput) {
-        int userInput;
+        int userInput = -1;
+
+        if (!isValidLength(rawInput)) {
+            return userInput;
+        }
 
         try {
             userInput = Integer.parseInt(rawInput);
-
-            if (isValid(NUMBER_LENGTH, rawInput)) {
-                return userInput;
-            }
         }
         catch (Exception e) {
             gameView.printErrorMsg(ErrorMessage.INVALID_INPUT_NUMBER.getMsg());
         }
-        return -1;
+        return userInput;
     }
 
-    private boolean isValid(int numLength, String num) {
-        return num.length() == numLength;
+    private boolean isValidLength(String input) {
+        if (input.length() != NUMBER_LENGTH) {
+            gameView.printErrorMsg(ErrorMessage.INVALID_INPUT_LENGTH.getMsg());
+            return false;
+        }
+        return true;
     }
+
 
     private ArrayList<Integer> toIntArray(int number) {
         ArrayList<Integer> arr = new ArrayList<>();
@@ -110,6 +124,7 @@ public class GameController {
             arr.add(number % 10);
             number /= 10;
         }
+        Collections.reverse(arr);
 
         return arr;
     }
