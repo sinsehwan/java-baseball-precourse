@@ -61,7 +61,7 @@ public class GameController {
             BaseballGameNumber answerNumber = new BaseballGameNumber(toIntArray(answer));
             BaseballGameNumber userNumber = new BaseballGameNumber(toIntArray(userInput));
 
-            GameAnswerType answerType = answerNumber.compare(userNumber);
+            GameAnswerType answerType = userNumber.compare(answerNumber);
             System.out.println(answerType.getAnswer());
         }
 
