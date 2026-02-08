@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class BaseballGameNumber {
-    private ArrayList<Integer> number;
+    private final ArrayList<Integer> number;
 
     public BaseballGameNumber(ArrayList<Integer> arr) {
         this.number = arr;

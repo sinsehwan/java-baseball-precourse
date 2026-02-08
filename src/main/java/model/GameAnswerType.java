@@ -1,8 +1,8 @@
 package model;
 
 public class GameAnswerType {
-    private int strikeCount;
-    private int ballCount;
+    private final int strikeCount;
+    private final int ballCount;
 
     public GameAnswerType() {
         this.strikeCount = 0;

@@ -20,9 +20,9 @@ public class GameController {
     private static final String EXIT_COMMAND = "2";
 
     private RandomNumberGenerator randomNumberGenerator;
-    private GameView gameView;
-    private InputView inputView;
-    private BufferedReader br;
+    private final GameView gameView;
+    private final InputView inputView;
+    private final BufferedReader br;
 
     public GameController() {
         this.randomNumberGenerator = new RandomNumberGenerator();

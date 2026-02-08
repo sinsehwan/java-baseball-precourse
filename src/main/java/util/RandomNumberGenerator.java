@@ -3,7 +3,7 @@ package util;
 import java.util.Random;
 
 public class RandomNumberGenerator {
-    private Random random;
+    private final Random random;
 
     public RandomNumberGenerator() {
         this.random = new Random();
