@@ -35,9 +35,9 @@ public class GameAnswerType {
 
         if (ballCount > 0) {
             sb.append(ballCount);
-            sb.append("볼");
+            sb.append("볼 ");
         }
 
-        return sb.toString();
+        return sb.toString().trim();
     }
 }
