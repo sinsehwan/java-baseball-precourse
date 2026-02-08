@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 
 public class InputView {
     private static final int NUMBER_LENGTH = 3;
+    private static final int INVALID_INPUT = -1;
     private final GameView gameView;
     private final BufferedReader br;
 
@@ -19,7 +20,7 @@ public class InputView {
             String rawInput = br.readLine();
             int parsedInput = parseUserInput(rawInput);
 
-            if (parsedInput != -1) {
+            if (parsedInput != INVALID_INPUT) {
                 return parsedInput;
             }
 
@@ -28,29 +29,40 @@ public class InputView {
     }
 
     private int parseUserInput(String rawInput) {
-        int userInput = -1;
+        if (!checkInputFormat(rawInput)) {
+            return INVALID_INPUT;
+        }
 
+        return parseToPositiveInt(rawInput);
+    }
+
+    private boolean checkInputFormat(String rawInput) {
         if (!isValidLength(rawInput)) {
-            return userInput;
+            return false;
         }
 
         if (rawInput.contains("0")) {
             gameView.printErrorMsg(ErrorMessage.CONTAINS_ZERO.getMsg());
-            return userInput;
+            return false;
         }
 
-        try {
-            userInput = Integer.parseInt(rawInput);
+        return true;
+    }
 
+    private int parseToPositiveInt(String rawInput) {
+        try {
+            int userInput = Integer.parseInt(rawInput);
             if (userInput <= 0) {
                 gameView.printErrorMsg(ErrorMessage.NOT_POSITIVE.getMsg());
-                return -1;
+                return INVALID_INPUT;
             }
+            return userInput;
         }
-        catch (Exception e) {
+        catch (NumberFormatException e) {
             gameView.printErrorMsg(ErrorMessage.INVALID_INPUT_NUMBER.getMsg());
+            return INVALID_INPUT;
         }
-        return userInput;
+
     }
 
     private boolean isValidLength(String input) {
