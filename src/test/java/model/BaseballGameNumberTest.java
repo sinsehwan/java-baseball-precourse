@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BaseBallGameNumberTest {
+public class BaseballGameNumberTest {
 
     @Test
     @DisplayName("3 스트라이크 체크")
